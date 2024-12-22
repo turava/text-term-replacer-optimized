@@ -20,6 +20,7 @@ def quicksort(arr):
     return quicksort(left) + middle + quicksort(right)
 
 
+
 def binary_search(word_list, word):
     """
     Perform binary search on a sorted list of words.
@@ -55,16 +56,29 @@ def replace_terms_in_text_with_quick_sort(text, dictionary):
     # Sorting the words using the imported quicksort function
     words_to_replace = quicksort(words_to_replace)
 
-    words = text.split()
-    for i, word in enumerate(words):
-        word_clean = re.sub(r'\W', '', word).lower()  # Clean word
+    def replace_word(word):
+        """Replaces the word based on the dictionary."""
+        word_clean = re.sub(r'\W', '', word).lower()  # Clean word for comparison
         if binary_search(words_to_replace, word_clean):
             for key, values in dictionary.items():
                 if word_clean in [v.lower() for v in values]:
-                    words[i] = key
-                    break
+                    return key  # Return the replacement term
+        return word  # If no replacement, return the original word
 
-    return ' '.join(words)
+    # Use regular expression to match words, punctuation, and spaces separately
+    words_and_symbols = re.findall(r'\w+|[^\w\s]+|\s+', text)  # Matches words, punctuation, and spaces separately
+
+    # Replace words where applicable
+    replaced_words = []
+    for word in words_and_symbols:
+        if word.strip() and not word.isspace():  # Only replace if it's a word
+            replaced_words.append(replace_word(word))
+        else:
+            replaced_words.append(word)  # Keep spaces and punctuation unchanged
+
+    # Reassemble the text with spaces and punctuation
+    return ''.join(replaced_words)
+
 
 
 def replace_terms_in_text_linear_search(text, dictionary):
