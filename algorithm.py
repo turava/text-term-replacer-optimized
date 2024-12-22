@@ -21,15 +21,24 @@ def binary_search(term, variants):
     return False
 
 
-def replace_terms_with_binary_search(text, dictionary):
-    # Usamos un bucle para recorrer el diccionario y reemplazar las palabras en el texto
+def replace_terms_in_text(text, dictionary):
+    """
+    Linear Search implementation
+    Function to replace terms in a text using binary search logic.
+    Args:
+        text (str): The input text where replacements need to be made.
+        dictionary (dict): A dictionary with keys as replacement terms 
+                           and values as lists of terms to be replaced.
+    Returns:
+        str: The modified text after replacements.
+    """
     for key, values in dictionary.items():
-        # Recorremos todas las palabras alternativas para cada clave en el diccionario
+        # Iterate through all alternative words for each key in the dictionary
         for value in values:
             print(f"Replacing '{value}' with '{key}' in the text")
-            # Usamos una expresión regular para reemplazar la palabra exacta
-            # 'r'\b' y '\b' aseguran que solo se reemplacen palabras completas
-            # La flag re.IGNORECASE se usa para hacer la búsqueda insensible a mayúsculas/minúsculas
+            # Use a regular expression to replace the exact word
+            # 'r'\b' and '\b' ensure that only whole words are replaced
+            # The re.IGNORECASE flag is used to make the search case-insensitive
             text = re.sub(r'\b' + re.escape(value) + r'\b', key, text, flags=re.IGNORECASE)
     return text
 

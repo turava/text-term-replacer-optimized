@@ -2,40 +2,39 @@ import yaml
 from algorithm import *
 import yaml
 
-# Función para cargar los tests desde un archivo YAML
 def load_tests_from_yaml(file_path):
+    """ Function to load tests from a YAML file.
+    Args:
+        file_path (str): Path to the YAML file containing the tests.
+    Returns:
+        dict: A dictionary with the loaded test cases.
+    """
     with open(file_path, 'r') as file:
-        return yaml.safe_load(file)  # Utilizamos safe_load para cargar los datos de forma segura
+        return yaml.safe_load(file)  # Use safe_load to load data safely
 
-# Función para reemplazar términos usando búsqueda binaria
-#def replace_terms_with_binary_search(text, dictionary):
-    # Lógica para reemplazar términos usando búsqueda binaria
-    for key, values in dictionary.items():
-        for value in values:
-            if value in text:
-                text = text.replace(value, key)
-    return text
 
-# Función para ejecutar los tests
+
 def run_tests_binary_search():
-    print(f"Testesndo el algoritmo")
-    # Carga de los tests desde el archivo YAML
+    """
+    Function to run and validate test cases for the binary search algorithm.
+
+    This function loads test cases from a YAML file, applies the replacement 
+    function to each test case, and compares the result with the expected output.
+    """
+    print("Testing the algorithm")
+    # Load tests from the YAML file
     tests = load_tests_from_yaml('tests.yml')
 
-    # Recorremos cada test y ejecutamos la prueba
-    for i, test in enumerate(tests['tests'], 1):  # Asegúrate de acceder correctamente a la clave 'tests'
-        result = replace_terms_with_binary_search(test["text"], test["dictionary"])
+    # Iterate through each test case
+    for i, test in enumerate(tests['tests'], 1): # Ensure you access the 'tests' key correctly
+        result = replace_terms_in_text(test["text"], test["dictionary"])
 
-        # Mostrar el resultado antes de hacer la comparación
+        # Display the test details and results
         print(f"Test {i}:")
         print(f"Inserted: {test['text']}")
         print(f"Expected: {test['expected']}")
         print(f"Result: {result}")
         
-        # Comparar sin tener en cuenta las diferencias de mayúsculas/minúsculas
-        #assert result.strip().lower() == test["expected"].strip().lower(), f"Test {i} failed: {result} != {test['expected']}"
-        # Compare without considering case differences and print the result
-        print("This test is not considering the lower case differences")
         if result.strip().lower() != test["expected"].strip().lower():
             print(f"Test {i} failed: {result} != {test['expected']}")
         else:
