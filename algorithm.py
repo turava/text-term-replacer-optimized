@@ -36,13 +36,6 @@ def binary_search(word_list, word):
         return True
     return False
 
-# Búsqueda binaria
-#def binary_search(word_list, word):
-    index = bisect.bisect_left(word_list, word)
-    if index < len(word_list) and word_list[index] == word:
-        return True
-    return False
-
 def replace_terms_in_text_with_quick_sort(text, dictionary):
     """
     Replace terms in the given text using QuickSort for sorting replacement words 
@@ -88,7 +81,7 @@ def replace_terms_in_text_linear_search(text, dictionary):
     for key, values in dictionary.items():
         # Iterate through all alternative words for each key in the dictionary
         for value in values:
-            print(f"Replacing '{value}' with '{key}' in the text")
+            #print(f"Replacing '{value}' with '{key}' in the text")
             # Use a regular expression to replace the exact word
             # 'r'\b' and '\b' ensure that only whole words are replaced
             # The re.IGNORECASE flag is used to make the search case-insensitive
