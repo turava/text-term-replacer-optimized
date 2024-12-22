@@ -1,53 +1,50 @@
 # Text-Term-Replacer-Optimized
 
-**Text-Term-Replacer-Optimized** is a Python-based text processing tool that replaces specific terms in a string using a predefined dictionary. The code implements two types of search to find the words to replace: **binary search** and **linear search**.
+**Text-Term-Replacer-Optimized** is a Python-based text processing tool that replaces specific terms in a string using a predefined dictionary. The code implements **binary search** and **linear search** for finding terms to replace, and also utilizes **QuickSort** for sorting the dictionary entries before the replacement process. The aim is to compare the performance of these search algorithms while using an optimized sorting algorithm.
 
-The tool is optimized for efficiency, using binary search as an improvement over the traditional linear search. The goal is to demonstrate how different search approaches affect performance in terms of execution time, memory usage, and CPU usage.
+The tool is designed to be used in contexts such as **text normalization** in machine learning pipelines or **real-time transcription systems** where quick and efficient text replacement is required.
 
 ## Main Features:
 - **Text replacement**: Replaces terms in a string based on a predefined dictionary of terms and their replacements.
-- **Binary and linear search**: Implements both search methods to compare performance.
-  - **Binary search** is used in the optimized approach, providing more efficient time complexity compared to linear search.
-  - **Linear search** is used in the non-optimized approach, iterating through the replacement list sequentially.
+- **Search algorithms**:
+  - **Binary Search**: An efficient search algorithm with a time complexity of **O(log n)**, ideal for sorted data.
+  - **Linear Search**: A simpler search algorithm with a time complexity of **O(n)**, used in the non-optimized approach.
+- **Sorting with QuickSort**: The dictionary entries are sorted using the **QuickSort** algorithm before performing replacements, enabling efficient binary search.
 
-## Use Cases:
-- **Text normalization** in machine learning pipelines.
-- **Real-time transcription systems** that require fast and efficient term replacement.
+## QuickSort Algorithm:
+**QuickSort** is a divide-and-conquer algorithm for sorting. It selects a "pivot" element from the list and partitions the other elements into two sub-arrays: those less than the pivot and those greater than the pivot. The sub-arrays are then recursively sorted.
 
-## Implementation:
-The code performs the following key operations:
+The primary benefit of QuickSort is its average time complexity of **O(n log n)**, which makes it efficient for sorting large datasets.
 
-1. **Dictionary preprocessing**: Creates a sorted list of terms to replace, improving performance during searches.
-2. **Term replacement**: A search (binary or linear) is performed for each word in the text, and it is replaced if found in the dictionary.
+### Time Complexity:
+- **Best case**: O(n log n) – when the pivot splits the array into equal parts.
+- **Average case**: O(n log n) – the pivot typically divides the array into roughly equal halves.
+- **Worst case**: O(n^2) – when the pivot is always the smallest or largest element, leading to unbalanced partitions.
+
+In the text-term-replacer tool, **QuickSort** is applied to the dictionary of terms before replacements are made. This ensures the dictionary is sorted, which is crucial for performing efficient binary searches.
+
+## Search Algorithms:
+1. **Binary Search**: 
+   - Used after the dictionary is sorted with **QuickSort**.
+   - With binary search, the time complexity for finding a replacement is reduced to **O(log n)**, which is much faster than linear search for large dictionaries.
+  
+2. **Linear Search**: 
+   - A basic search method where each term is checked one by one.
+   - This approach has a time complexity of **O(n)**, meaning it takes longer for larger dictionaries or texts.
 
 ## Performance Comparison:
-The tool's performance was evaluated using both search approaches, and the following metrics were measured:
-- **Execution time**: The total time taken for the text replacement process.
-- **Memory usage**: The amount of memory used during the execution of the code.
-- **CPU usage**: The percentage of CPU consumed while the algorithm is running.
+The tool compares the performance of both search approaches and measures the following metrics:
+- **Execution time**: How fast the text replacement process is.
+- **Memory usage**: The amount of memory used during execution.
+- **CPU usage**: The percentage of CPU consumed during the replacement process.
 
-#### Performance Tests:
-- **Binary search**: Uses **O(log n)** for searching terms in the dictionary, which results in more efficient performance for large texts or large dictionaries.
-- **Linear search**: Uses **O(n)**, which may be slower for large texts due to the need to iterate through the entire dictionary for each word in the text.
-
-#### Results:
-- **Binary search** showed an improvement in **execution time** and **memory usage** compared to linear search.
-- **Linear search** is useful for small dictionaries, but as the dictionary or text grows in size, the binary search becomes more efficient.
+### Results:
+- **Binary search** provides a significant performance boost, especially with larger dictionaries or longer texts.
+- **Linear search** may be useful for small dictionaries but becomes inefficient as the size of the dictionary or text increases.
+- **QuickSort** ensures that the dictionary is sorted, allowing binary search to be used effectively for replacements.
 
 ## Example Usage:
 
 ```python
-from text_term_replacer import replace_terms
 
-# Replacement dictionary
-replacements = {
-    "Gayá": ["galla", "gallá", "gaya", "gayá"],
-    "Deportes+": ["deportesplus", "DeportesPlus", "deportes+"]
-}
-
-# Text to process
-input_text = "Tenemos a galla en DeportesPlus"
-
-# Replace using binary search (optimized)
-output_text = replace_terms(input_text, replacements, use_binary_search=True)
-print(output_text)  # "Tenemos a Gayá en Deportes+"
+replace_terms_in_text_with_quick_sort, test["text"], test["dictionary"]
