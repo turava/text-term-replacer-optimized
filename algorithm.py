@@ -1,27 +1,80 @@
 import re
-def binary_search(term, variants):
+import bisect
+
+def quicksort(arr):
     """
-    Perform binary search to find a term in the list of variants.
-
-    :param term: Term to search for.
-    :param variants: Alphabetically sorted list of variants.
-    :return: True if the term is in the list, False otherwise.
+    Replace terms in the given text using QuickSort for sorting replacement words 
+    and binary search to find words to replace.
+    Args:
+        text (str): The input text where replacements need to be made.
+        dictionary (dict): A dictionary with replacement terms as keys and lists of terms to be replaced as values.
+    Returns:
+        str: The modified text after replacements.
     """
-    low, high = 0, len(variants) - 1
+    if len(arr) <= 1:
+        return arr
+    pivot = arr[len(arr) // 2]
+    left = [x for x in arr if x < pivot]
+    right = [x for x in arr if x > pivot]
+    middle = [x for x in arr if x == pivot]
+    return quicksort(left) + middle + quicksort(right)
 
-    while low <= high:
-        mid = (low + high) // 2
-        if variants[mid] == term:
-            return True
-        elif variants[mid] < term:
-            low = mid + 1
-        else:
-            high = mid - 1
 
+def binary_search(word_list, word):
+    """
+    Perform binary search on a sorted list of words.
+    
+    Args:
+        word_list (list): The sorted list of words to search through.
+        word (str): The word to search for.
+    
+    Returns:
+        bool: True if the word is found, False otherwise.
+    """
+    index = bisect.bisect_left(word_list, word)
+    if index < len(word_list) and word_list[index] == word:
+        return True
     return False
 
+# Búsqueda binaria
+#def binary_search(word_list, word):
+    index = bisect.bisect_left(word_list, word)
+    if index < len(word_list) and word_list[index] == word:
+        return True
+    return False
 
-def replace_terms_in_text(text, dictionary):
+def replace_terms_in_text_with_quick_sort(text, dictionary):
+    """
+    Replace terms in the given text using QuickSort for sorting replacement words 
+    and binary search to find words to replace.
+    
+    Args:
+        text (str): The input text where replacements need to be made.
+        dictionary (dict): A dictionary with replacement terms as keys and lists of terms to be replaced as values.
+    
+    Returns:
+        str: The modified text after replacements.
+    """
+    words_to_replace = []
+    for values in dictionary.values():
+        words_to_replace.extend(values)
+    
+    # Sorting the words using the imported quicksort function
+    words_to_replace = quicksort(words_to_replace)
+
+    words = text.split()
+    for i, word in enumerate(words):
+        word_clean = re.sub(r'\W', '', word).lower()  # Clean word
+        if binary_search(words_to_replace, word_clean):
+            for key, values in dictionary.items():
+                if word_clean in [v.lower() for v in values]:
+                    words[i] = key
+                    break
+
+    return ' '.join(words)
+
+
+def replace_terms_in_text_linear_search(text, dictionary):
     """
     Linear Search implementation
     Function to replace terms in a text using binary search logic.
